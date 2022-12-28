@@ -27,4 +27,3 @@ docker run --rm --name node-backend --network backend-net --mount type=bind,sour
 ```
 docker run --rm --name nginx-proxy --network backend-net -p 8080:80 -d stephano1234/nginx-proxy
 ```
----
