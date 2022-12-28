@@ -2,7 +2,6 @@
 ```
 docker network create backend-net --driver bridge
 ```
----
 ### Manually build the images
 ```
 docker build -t stephano1234/mysql-db mysql-example/.
@@ -13,7 +12,6 @@ docker build -t stephano1234/node-backend node-example/.
 ```
 docker build -t stephano1234/nginx-proxy nginx-example/.
 ```
----
 ### Manually run the containers in proper order
 #### First container
 ```
