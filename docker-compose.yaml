@@ -1,0 +1,39 @@
+version: '3'
+services:
+  nginx-proxy:
+    image: stephano1234/nginx-proxy
+    build:
+      context: nginx-example
+    container_name: nginx-proxy
+    networks:
+      - backend-net
+    ports:
+      - 8080:80
+    entrypoint: dockerize -wait tcp://node-backend:3000 -timeout 20s
+    command: [ "nginx", "-g", "daemon off;" ]
+    depends_on:
+      - node-backend
+  node-backend:
+    image: stephano1234/node-backend
+    build:
+      context: node-example
+    container_name: node-backend
+    networks:
+      - backend-net
+    entrypoint: dockerize -wait tcp://mysql-db:3306 -timeout 20s
+    command: node index.js
+    depends_on:
+      - mysql-db
+  mysql-db:
+    image: stephano1234/mysql-db
+    build:
+      context: mysql-example
+    container_name: mysql-db
+    networks:
+      - backend-net
+    volumes:
+      - /home/main/dockerfiles/mysql-example/mysql:/var/lib/mysql:rw
+networks:
+  backend-net:
+    name: backend-net
+    driver: bridge
