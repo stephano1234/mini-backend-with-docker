@@ -10,19 +10,19 @@ const dbConnectionConfig = {
     database: 'example-db'
 };
 const dbConnection = mysql.createConnection(dbConnectionConfig);
-const table = 'people'
+const table = 'logs'
 const query = `SELECT * FROM ${table};`;
 
-app.get('/', (req, res) => {
-    let html = '<h1>Full Cycle</h1>';
+app.get('/', (_req, res) => {
+    let html = '<h1>APP UP</h1>';
     html += '<table style="border: 1px solid black;">';
     html += '<tr><th style="border: 1px solid black;">id</th>';
-    html += '<th style="border: 1px solid black;">name</th></tr>';
+    html += '<th style="border: 1px solid black;">log</th></tr>';
     dbConnection.query(query, (errors, results) => {
         if (errors) throw errors;
         results?.forEach(result => {
             html += `<tr><td style="border: 1px solid black;">${result.id}</td>`;
-            html += `<td style="border: 1px solid black;">${result.name}</td></tr>`;
+            html += `<td style="border: 1px solid black;">${result.log}</td></tr>`;
         });
         html += '</table>';
         res.send(html);
@@ -31,10 +31,10 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => {
     console.log('Listening on port:', port);
-    const createTableQuery = `CREATE TABLE IF NOT EXISTS ${table} (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(255), PRIMARY KEY (id));`;
+    const createTableQuery = `CREATE TABLE IF NOT EXISTS ${table} (id INT NOT NULL AUTO_INCREMENT, log VARCHAR(255), PRIMARY KEY (id));`;
     dbConnection.query(createTableQuery, (errors, _results) => {
         if (errors) throw errors;
-        dbConnection.query(`INSERT INTO ${table} (name) VALUES ('docker up');`);
+        dbConnection.query(`INSERT INTO ${table} (log) VALUES ('docker up');`);
     });
 });
 

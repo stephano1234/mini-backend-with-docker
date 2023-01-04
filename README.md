@@ -1,8 +1,19 @@
-### Manually create the network
+## Run command
+### Get everything working with:
+```
+docker-compose up
+```
+### See the result at:
+```
+http://localhost:8080/
+```
+***
+## Build steps
+### Create the network
 ```
 docker network create backend-net --driver bridge
 ```
-### Manually build the images
+### Build the images
 ```
 docker build -t stephano1234/mysql-db mysql-example/.
 ```
@@ -12,7 +23,7 @@ docker build -t stephano1234/node-backend node-example/.
 ```
 docker build -t stephano1234/nginx-proxy nginx-example/.
 ```
-### Manually run the containers in proper order
+### Run the containers in proper order
 #### First container
 ```
 docker run --rm --name mysql-db --network backend-net --mount type=bind,source=/home/main/dockerfiles/mysql-example/mysql/,target=/var/lib/mysql -d stephano1234/mysql-db
